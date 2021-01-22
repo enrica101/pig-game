@@ -13,21 +13,26 @@ const holdBtn = document.querySelector('.btn--hold');
 const name0 = document.getElementById('name--0');
 const name1 = document.getElementById('name--1');
 
-let score = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
+let score, currentScore,activePlayer, playing;
 
-const resetGame = function() {
+const init = function () {
+  score = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
   score0El.textContent = 0;
   score1El.textContent = 0;
   current0El.textContent = 0;
   current1El.textContent = 0;
-  if(player1El.classList.contains('player--winner')){
-    player0El.classList.remove('player--winner');
-    
-  }
-}
+  diceEl.classList.add('hidden');
+  
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+};
+init();
+
 
 function switchPlayer() {
   currentScore = 0;
@@ -44,6 +49,9 @@ score1El.textContent = 0;
 current0El.textContent = 0;
 current1El.textContent = 0;
 diceEl.classList.add('hidden');
+
+//resetting the game
+newBtn.addEventListener('click', init);
 
 //rolling a dice
 rollBtn.addEventListener('click', () => {
@@ -77,8 +85,8 @@ holdBtn.addEventListener('click', () => {
 
     if (score[activePlayer] >= 100) {
       playing = false;
-      
-    diceEl.classList.add('hidden');
+
+      diceEl.classList.add('hidden');
       document
         .querySelector(`.player--${activePlayer}`)
         .classList.add('player--winner');
